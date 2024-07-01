@@ -1,38 +1,24 @@
-//write a smart contract that implements the require(), assert() and revert() statements.
-
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract ErrorHandling {
-    // State variable to store an integer
-    uint public number;
+contract SimpleDivision {
+    // Function to perform division with basic checks
+    function divide(uint256 numerator, uint256 denominator) public pure returns (uint256) {
+        // Check that the denominator is not zero using require()
+        require(denominator != 0, "Denominator cannot be zero");
 
-    // Function to set a number with a require check
-    function setNumber(uint _number) public {
-        // Use require to check if the number is positive
-        require(_number > 0, "Number must be positive");
-        number = _number;
+        // Perform the division
+        uint256 result = numerator / denominator;
+
+        // Check that the result is valid using assert()
+        assert(result <= numerator);
+
+        return result;
     }
 
-    // Function to divide the stored number by a given number
-    function divideNumber(uint _divisor) public view returns (uint) {
-        // Use require to check if the divisor is not zero
-        require(_divisor != 0, "Divisor cannot be zero");
-        return number / _divisor;
-    }
-
-    // Function to demonstrate assert
-    function assertExample() public view returns (string memory) {
-        // Use assert to check for an invariant condition
-        assert(number > 0);
-        return "Number is greater than zero, as expected";
-    }
-
-    // Function to demonstrate revert
-    function revertExample() public view {
-        // Condition that leads to a revert
-        if (number == 42) {
-            revert("Number cannot be 42");
-        }
+    // Function to demonstrate the use of revert() statement
+    function alwaysFail() public pure {
+        // Revert with an error message
+        revert("This function always fails");
     }
 }
